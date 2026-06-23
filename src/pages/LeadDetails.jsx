@@ -212,99 +212,136 @@ const LeadDetails = ({ leadId, onBack }) => {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Section 3: Website Audit Summary */}
-          <div className="bg-white border border-slate-200 rounded-xl shadow-subtle p-6 space-y-5">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-1.5">
-              <Globe className="w-4 h-4 text-slate-400" />
-              Website Audit Summary
-            </h3>
+<div className="bg-white border border-slate-200 rounded-xl shadow-subtle p-6 space-y-5">
+  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-1.5">
+    <Globe className="w-4 h-4 text-slate-400" />
+    Website Audit Summary
+  </h3>
 
-            {lead.auditSummary ? (
-              <div className="space-y-4">
-                {/* Metric blocks */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
-                    <span className="block text-[9px] font-bold text-slate-400 uppercase">SEO Score</span>
-                    <span className="block mt-1 font-bold text-slate-800 text-sm">{lead.auditSummary.seoScore}/100</span>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
-                    <span className="block text-[9px] font-bold text-slate-400 uppercase">Access.</span>
-                    <span className="block mt-1 font-bold text-slate-800 text-sm">{lead.auditSummary.accessibility}/100</span>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
-                    <span className="block text-[9px] font-bold text-slate-400 uppercase">Performance</span>
-                    <span className="block mt-1 font-bold text-slate-800 text-sm">{lead.auditSummary.performanceScore}/100</span>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
-                    <span className="block text-[9px] font-bold text-slate-400 uppercase">Load Speed</span>
-                    <span className="block mt-1 font-bold text-slate-800 text-sm">{lead.auditSummary.loadSpeed}</span>
-                  </div>
-                </div>
+  {lead.audit ? (
+    <div className="space-y-4">
+      {/* Audit Status */}
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium text-slate-500">
+          Audit Status
+        </span>
+        <span
+          className={`text-xs font-semibold ${
+            lead.audit.status === 'Completed'
+              ? 'text-green-600'
+              : 'text-amber-600'
+          }`}
+        >
+          {lead.audit.status}
+        </span>
+      </div>
 
-                <div className="grid grid-cols-2 gap-4 text-slate-600 font-normal">
-                  <p>
-                    <span className="font-bold text-slate-700">SSL status:</span>{' '}
-                    <span className={lead.auditSummary.ssl ? 'text-success-dark font-bold' : 'text-error font-bold'}>
-                      {lead.auditSummary.ssl ? 'Secure HTTPS' : 'Insecure Warning'}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-bold text-slate-700">Mobile Friendly:</span>{' '}
-                    <span className={lead.auditSummary.mobileResponsive ? 'text-success-dark font-bold' : 'text-error font-bold'}>
-                      {lead.auditSummary.mobileResponsive ? 'Responsive' : 'Non-Responsive'}
-                    </span>
-                  </p>
-                </div>
+      {/* Metrics */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
+          <span className="block text-[9px] font-bold text-slate-400 uppercase">
+            SEO Score
+          </span>
+          <span className="block mt-1 font-bold text-slate-800 text-sm">
+            {lead.audit.seo_score}/100
+          </span>
+        </div>
 
-                {/* Audit issues list */}
-                {lead.auditSummary.issues && (
-                  <div className="space-y-2 mt-2">
-                    <span className="block text-[10px] font-bold text-slate-400 uppercase">Identified Errors</span>
-                    <ul className="list-disc pl-5 space-y-1 font-normal text-slate-500">
-                      {lead.auditSummary.issues.map((issue, idx) => (
-                        <li key={idx}>{issue}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="text-center py-6 border border-dashed border-slate-200 rounded-xl">
-                <p className="text-slate-400 font-normal">No audit performed on this website domain yet.</p>
-                <button
-                  onClick={() => runWebsiteAudit(lead.id)}
-                  className="mt-3 px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700"
-                >
-                  Run Audit Scan
-                </button>
-              </div>
-            )}
-          </div>
+        <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
+          <span className="block text-[9px] font-bold text-slate-400 uppercase">
+            Access.
+          </span>
+          <span className="block mt-1 font-bold text-slate-800 text-sm">
+            {lead.audit.accessibility_score}/100
+          </span>
+        </div>
 
-          {/* Section 4: AI Opportunity Insights & Suggested Services */}
-          {lead.aiInsights && (
-            <div className="bg-brand/5 border border-brand/10 rounded-xl p-5 space-y-4">
-              <h3 className="text-xs font-bold text-brand uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4" />
-                AI Outreach Intelligence Suggestions
-              </h3>
-              
-              <div className="space-y-3 font-normal text-slate-700 leading-relaxed">
-                <p><span className="font-bold text-slate-800">Pain Points:</span> {lead.aiInsights.painPoints}</p>
-                <p><span className="font-bold text-slate-800">Value Pitch Hook:</span> {lead.aiInsights.suggestedHook}</p>
-                
-                <div className="pt-2">
-                  <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Suggested Outreach Services</span>
-                  <div className="flex flex-wrap gap-2">
-                    {lead.aiInsights.recommendedServices.map(srv => (
-                      <span key={srv} className="inline-flex px-2.5 py-1 bg-white border border-brand/20 text-brand rounded-md font-bold text-[10px]">
-                        {srv}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+        <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
+          <span className="block text-[9px] font-bold text-slate-400 uppercase">
+            Performance
+          </span>
+          <span className="block mt-1 font-bold text-slate-800 text-sm">
+            {lead.audit.performance_score}/100
+          </span>
+        </div>
+
+        <div className="bg-slate-50 border border-slate-100 p-3 rounded-lg text-center">
+          <span className="block text-[9px] font-bold text-slate-400 uppercase">
+            Load Speed
+          </span>
+          <span className="block mt-1 font-bold text-slate-800 text-sm">
+            {lead.audit.load_speed}
+          </span>
+        </div>
+      </div>
+
+      {/* SSL & Mobile */}
+      <div className="grid grid-cols-2 gap-4 text-slate-600">
+        <p>
+          <span className="font-bold text-slate-700">
+            SSL Status:
+          </span>{' '}
+          <span
+            className={
+              lead.audit.ssl
+                ? 'text-green-600 font-bold'
+                : 'text-red-600 font-bold'
+            }
+          >
+            {lead.audit.ssl
+              ? 'Secure HTTPS'
+              : 'SSL Not Enabled'}
+          </span>
+        </p>
+
+        <p>
+          <span className="font-bold text-slate-700">
+            Mobile Friendly:
+          </span>{' '}
+          <span
+            className={
+              lead.audit.mobile_responsive
+                ? 'text-green-600 font-bold'
+                : 'text-red-600 font-bold'
+            }
+          >
+            {lead.audit.mobile_responsive
+              ? 'Responsive'
+              : 'Not Responsive'}
+          </span>
+        </p>
+      </div>
+
+      {/* Issues */}
+      {lead.audit.issues?.length > 0 && (
+        <div className="space-y-2 mt-2">
+          <span className="block text-[10px] font-bold text-slate-400 uppercase">
+            Identified Issues
+          </span>
+
+          <ul className="list-disc pl-5 space-y-1 text-slate-500">
+            {lead.audit.issues.map((issue, idx) => (
+              <li key={idx}>{issue}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  ) : (
+    <div className="text-center py-6 border border-dashed border-slate-200 rounded-xl">
+      <p className="text-slate-400">
+        No audit performed on this website yet.
+      </p>
+
+      <button
+        onClick={() => runWebsiteAudit(lead.id)}
+        className="mt-3 px-3 py-1.5 text-xs font-semibold bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700"
+      >
+        Run Audit Scan
+      </button>
+    </div>
+  )}
+</div>
 
           {/* Double column lower details: Tasks & Notes */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

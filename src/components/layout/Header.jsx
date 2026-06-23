@@ -15,7 +15,6 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Header = ({ onMenuToggle, currentTab, setCurrentTab }) => {
   const { globalSearch, setGlobalSearch, notifications, markAllNotificationsRead } = useApp();
-  console.log(globalSearch, "globalSearch")
   const { user, logout } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);

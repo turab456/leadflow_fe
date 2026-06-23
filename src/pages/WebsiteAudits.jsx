@@ -25,7 +25,6 @@ const WebsiteAudits = () => {
   const [selectedAudit, setSelectedAudit] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showRunAuditModal, setShowRunAuditModal] = useState(false);
-
   // Filter audits
   const filteredAudits = audits.filter(a =>
     a.businessName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -43,22 +42,8 @@ const WebsiteAudits = () => {
   const handleOpenReport = (audit) => {
     // Find the full lead details to pull AI insights and issues list
     const lead = leads.find(l => l.website === audit.website);
-    const mergedAudit = {
-      ...audit,
-      issues: lead?.auditSummary?.issues || [
-        "Optimize large visual images for better compression ratios",
-        "Implement browser caching policies on static assets",
-        "Add missing meta descriptive keyword tags"
-      ],
-      aiInsights: lead?.aiInsights || {
-        opportunityScore: 85,
-        painPoints: "Slow speed on mobile booking pages prevents client signups.",
-        suggestedHook: "Pitch performance optimization to lift bookings by 10%.",
-        valueProp: "Core performance audit upgrades.",
-        recommendedServices: ["Web Perf Tuning", "Mobile Optimization"]
-      }
-    };
-    setSelectedAudit(mergedAudit);
+
+    setSelectedAudit(audit);
     setShowDetailModal(true);
   };
 
@@ -169,7 +154,7 @@ const WebsiteAudits = () => {
             {/* Top row: SSL and Responsive Indicators */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 border border-slate-100 bg-slate-50/50 rounded-xl flex items-center gap-3">
-                {selectedAudit.ssl === 'Secure' ? (
+                {selectedAudit.ssl === true ? (
                   <div className="p-2 rounded-lg bg-success/15 text-success-dark">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
@@ -181,7 +166,7 @@ const WebsiteAudits = () => {
                 <div>
                   <h4 className="font-bold text-slate-700">SSL Certificate Status</h4>
                   <p className="text-slate-500 font-normal mt-0.5">
-                    {selectedAudit.ssl === 'Secure'
+                    {selectedAudit.ssl === true
                       ? 'Valid SHA-256 SSL connection active.'
                       : 'Missing or expired SSL certificate configuration.'}
                   </p>
@@ -189,7 +174,7 @@ const WebsiteAudits = () => {
               </div>
 
               <div className="p-4 border border-slate-100 bg-slate-50/50 rounded-xl flex items-center gap-3">
-                {selectedAudit.mobileResponsive === 'Responsive' ? (
+                {selectedAudit.mobile_responsive ===true ? (
                   <div className="p-2 rounded-lg bg-success/15 text-success-dark">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
@@ -201,7 +186,7 @@ const WebsiteAudits = () => {
                 <div>
                   <h4 className="font-bold text-slate-700">Viewport Responsiveness</h4>
                   <p className="text-slate-500 font-normal mt-0.5">
-                    {selectedAudit.mobileResponsive === 'Responsive'
+                    {selectedAudit.mobile_responsive === true
                       ? 'Mobile media queries and layouts validated.'
                       : 'Severe responsive breaks and horizontal scrolls detected.'}
                   </p>
@@ -213,15 +198,15 @@ const WebsiteAudits = () => {
             <div className="grid grid-cols-3 gap-4 border-t border-b border-slate-100 py-6">
               <div className="text-center space-y-1.5">
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">SEO Audit</span>
-                <ScoreBadge score={selectedAudit.seoScore} />
+                <ScoreBadge score={selectedAudit.seo_score} />
               </div>
               <div className="text-center space-y-1.5">
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Accessibility</span>
-                <ScoreBadge score={selectedAudit.accessibility} />
+                <ScoreBadge score={selectedAudit.accessibility_score} />
               </div>
               <div className="text-center space-y-1.5">
                 <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Performance</span>
-                <ScoreBadge score={selectedAudit.performanceScore} />
+                <ScoreBadge score={selectedAudit.performance_score} />
               </div>
             </div>
 
@@ -239,7 +224,7 @@ const WebsiteAudits = () => {
             </div>
 
             {/* Opportunity insights */}
-            <div className="bg-brand/5 border border-brand/10 rounded-xl p-5 space-y-3">
+            {/* <div className="bg-brand/5 border border-brand/10 rounded-xl p-5 space-y-3">
               <h4 className="text-sm font-bold text-brand flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4" />
                 AI Outreach Intelligence Suggestions
@@ -256,7 +241,7 @@ const WebsiteAudits = () => {
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Footer buttons */}
             <div className="flex items-center justify-end pt-4 border-t border-slate-100">

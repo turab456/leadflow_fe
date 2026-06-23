@@ -14,7 +14,6 @@ import ScoreBadge from '../common/ScoreBadge';
 import { useApp } from '../../contexts/AppContext';
 
 const LeadTable = ({ leads, onLeadClick, loading = false }) => {
-  console.log(leads, "table")
   const { toggleSaveLead, runWebsiteAudit } = useApp();
   const [sortField, setSortField] = useState('leadScore');
   const [sortDirection, setSortDirection] = useState('desc');
@@ -124,7 +123,7 @@ const LeadTable = ({ leads, onLeadClick, loading = false }) => {
                     <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
                       {/* Save Button */}
                       <button
-                        onClick={() => toggleSaveLead(lead.id)}
+                        onClick={() => toggleSaveLead(lead)}
                         className={`p-1.5 rounded-lg border transition-all ${isSaved
                           ? 'bg-brand/10 border-brand/20 text-brand'
                           : 'bg-white border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-50'
@@ -135,7 +134,7 @@ const LeadTable = ({ leads, onLeadClick, loading = false }) => {
                       </button>
 
                       {/* Website Audit Button */}
-                      <button
+                      {/* <button
                         onClick={() => runWebsiteAudit(lead.id)}
                         disabled={lead.websiteStatus === 'Auditing'}
                         className={`p-1.5 rounded-lg border transition-all ${lead.websiteStatus === 'Audited'
@@ -145,7 +144,7 @@ const LeadTable = ({ leads, onLeadClick, loading = false }) => {
                         title={lead.websiteStatus === 'Audited' ? "Website Audited" : "Run Website Audit"}
                       >
                         <Globe className="w-4 h-4" />
-                      </button>
+                      </button> */}
 
                       {/* Details Button */}
                       <button

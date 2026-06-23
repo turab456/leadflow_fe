@@ -16,7 +16,6 @@ const clearAuthTokens = () => {
 const parseResponse = async (response) => {
   const text = await response.text();
   const data = text ? JSON.parse(text) : null;
-  console.log(data)
   if (!response.ok) {
     const message = data?.error || data?.message || response.statusText;
     throw new Error(message);

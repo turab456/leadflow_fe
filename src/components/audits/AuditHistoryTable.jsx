@@ -22,8 +22,7 @@ const AuditHistoryTable = ({ audits, onViewDetails }) => {
           </thead>
           <tbody className="divide-y divide-slate-100 text-sm">
             {audits.map((audit) => {
-              const isSSLSecure = audit.ssl === 'Secure';
-              const isMobileResponsive = audit.mobileResponsive === 'Responsive';
+              
               return (
                 <tr key={audit.id} className="hover:bg-slate-50/50 transition-colors">
                   <td className="px-6 py-4">
@@ -34,31 +33,31 @@ const AuditHistoryTable = ({ audits, onViewDetails }) => {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                      isSSLSecure ? 'bg-success/10 text-success-dark' : 'bg-error/10 text-error-dark'
+                      audit.ssl ? 'bg-success/10 text-success-dark' : 'bg-error/10 text-error-dark'
                     }`}>
-                      {isSSLSecure ? <ShieldCheck className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />}
+                      {audit.ssl ? <ShieldCheck className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />}
                       {audit.ssl}
                     </span>
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                      isMobileResponsive ? 'bg-success/10 text-success-dark' : 'bg-error/10 text-error-dark'
+                      audit.mobile_responsive ? 'bg-success/10 text-success-dark' : 'bg-error/10 text-error-dark'
                     }`}>
-                      {isMobileResponsive ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
-                      {audit.mobileResponsive}
+                      {audit.mobile_responsive ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      {audit.mobile_responsive}
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <ScoreBadge score={audit.seoScore} size="sm" />
+                    <ScoreBadge score={audit.seo_score} size="sm" />
                   </td>
                   <td className="px-6 py-4">
-                    <ScoreBadge score={audit.accessibility} size="sm" />
+                    <ScoreBadge score={audit.accessibility_score} size="sm" />
                   </td>
                   <td className="px-6 py-4">
-                    <ScoreBadge score={audit.performanceScore} size="sm" />
+                    <ScoreBadge score={audit.performance_score} size="sm" />
                   </td>
                   <td className="px-6 py-4">
-                    <span className="font-semibold text-slate-700">{audit.loadSpeed}</span>
+                    <span className="font-semibold text-slate-700">{audit.load_speed}</span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button
